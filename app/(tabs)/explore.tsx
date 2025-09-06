@@ -1,110 +1,127 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
+import { useAppSelector } from "@/redux/hooks";
+import { useGetUserOrdersQuery } from "@/redux/api/orderApi";
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+export type OrderItem = {
+  _id: string;
+  title: string;
+  price: number;
+  image: string;
+  quantity: number;
+};
 
-export default function TabTwoScreen() {
+export type Order = {
+  _id: string;
+  tran_id: string;
+  amount: number;
+  currency: string;
+  items: OrderItem[];
+  orderStatus:
+    | "PENDING"
+    | "PROCESSING"
+    | "SHIPPED"
+    | "DELIVERED"
+    | "RETURNED"
+    | "ON_ARRIVAL_PENDING"
+    | "ON_ARRIVAL_DELIVERED";
+};
+
+export default function UserOrdersList() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const user = useAppSelector((state) => state.auth.user);
+  const { data: orders, isLoading } = useGetUserOrdersQuery(user?._id ?? "", {
+    skip: !user?._id,
+  });
+
+  if (!mounted) return <Text style={styles.centerText}>Loading...</Text>;
+  if (isLoading) return <Text style={styles.centerText}>Loading your orders...</Text>;
+  if (!orders?.data || orders.data.length === 0)
+    return <Text style={styles.centerText}>No orders found.</Text>;
+
+  const renderOrderItem = ({ item: order }: { item: Order }) => (
+    <View style={styles.orderCard}>
+      <Text style={styles.orderId}>Order: {order.tran_id}</Text>
+      <Text
+        style={[
+          styles.orderStatus,
+          order.orderStatus === "PENDING"
+            ? styles.pending
+            : order.orderStatus === "DELIVERED"
+            ? styles.delivered
+            : styles.otherStatus,
+        ]}
+      >
+        {order.orderStatus}
+      </Text>
+      <Text style={styles.amount}>
+        {order.amount} {order.currency}
+      </Text>
+      <FlatList
+        data={order.items}
+        keyExtractor={(item) => item._id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View style={styles.itemCard}>
+            <Image source={{ uri: item.image }} style={styles.itemImage} />
+            <View style={styles.itemInfo}>
+              <Text style={styles.itemTitle}>{item.title}</Text>
+              <Text style={styles.itemPrice}>
+                {item.price} × {item.quantity}
+              </Text>
+            </View>
+          </View>
+        )}
+      />
+    </View>
+  );
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <Text style={styles.header}>My Orders</Text>
+      <FlatList
+        data={orders.data}
+        keyExtractor={(item) => item._id}
+        renderItem={renderOrderItem}
+        contentContainerStyle={{ paddingBottom: 50 }}
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  header: { fontSize: 24, fontWeight: "bold", marginBottom: 16 },
+  centerText: { textAlign: "center", marginTop: 20, fontSize: 16 },
+  orderCard: {
+    backgroundColor: "#fff",
+    padding: 12,
+    marginBottom: 16,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
+  orderId: { fontSize: 16, fontWeight: "bold", marginBottom: 4 },
+  orderStatus: { fontSize: 14, fontWeight: "600", marginBottom: 4, padding: 4, borderRadius: 6, alignSelf: "flex-start" },
+  pending: { backgroundColor: "#FEF3C7", color: "#B45309" },
+  delivered: { backgroundColor: "#D1FAE5", color: "#065F46" },
+  otherStatus: { backgroundColor: "#E5E7EB", color: "#374151" },
+  amount: { fontSize: 16, fontWeight: "600", marginBottom: 8 },
+  itemCard: { flexDirection: "row", alignItems: "center", marginRight: 12, backgroundColor: "#F9FAFB", padding: 8, borderRadius: 10 },
+  itemImage: { width: 48, height: 48, borderRadius: 8, marginRight: 8 },
+  itemInfo: {},
+  itemTitle: { fontSize: 14, fontWeight: "500" },
+  itemPrice: { fontSize: 12, color: "#6B7280" },
 });
