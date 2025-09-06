@@ -9,23 +9,21 @@ This project provides a complete shopping experience with authentication, produc
 
 👉 [E-Commerce Web App](https://ecommercefrontend-orpin.vercel.app/)  
 
-Login credentials are available directly on the **Login Page** of the app.  
+🔑 **Login credentials** are available directly on the **Login Page** of the app.  
 
 ---
 
 ## 📱 Mobile App
 
-The mobile version is built using **Expo + React Native** and provides the same functionality as the web app, optimized for mobile users.
+The mobile version is built using **Expo + React Native** and provides the same functionality as the web app, optimized for mobile users.  
 
 ---
 
 ## 📹 Project Demo
 
-Here’s a quick walkthrough of the project:  
+[![Watch the Demo](https://img.shields.io/badge/▶️%20Click%20to%20Play%20Demo-red?style=for-the-badge)](https://drive.google.com/file/d/1Z3CwnjKUDcamK2MmikJRzSMPUbRnUhez/view?usp=sharing)
 
-https://github.com/your-username/your-repo-name/raw/main/demo.mp4  
-
-*(The video file `video.mp4` is located in the root of this repository.)*
+*(Video demo hosted on Google Drive — click the button to watch the project in action.)*  
 
 ---
 
@@ -37,18 +35,18 @@ https://github.com/your-username/your-repo-name/raw/main/demo.mp4
 - Auto-persisted user state  
 
 ### 🛍️ Products
-- Product listing with categories  
+- Product listing with categories & subcategories  
 - Product detail page with add-to-cart  
 - Popular products section  
 - Discount & original price display  
 
 ### 🛒 Cart
-- Add to cart with quantity  
+- Add to cart with quantity management  
 - Cart state synced across app  
 - Clear cart after successful payment  
 
 ### 📦 Orders
-- Order placement with payment integration  
+- Place orders with payment integration  
 - View all past orders with status badges:
   - `PENDING`
   - `PROCESSING`
@@ -77,9 +75,9 @@ https://github.com/your-username/your-repo-name/raw/main/demo.mp4
 - **React Navigation (expo-router)**  
 - **Redux Toolkit**  
 
-### Backend (assumed / API)
-- **Node.js / Express** or another REST API backend  
-- Integrated with payment gateway  
+### Backend (API Layer - Assumed)
+- **Node.js / Express** or similar REST API backend  
+- Integrated with a **Payment Gateway**  
 
 ---
 
@@ -88,4 +86,4 @@ https://github.com/your-username/your-repo-name/raw/main/demo.mp4
 ### Clone the Repository
 ```bash
 git clone https://github.com/Monirul-Jim/e_comm_expo_app
-cd your-repo-name
+cd e_comm_expo_app
