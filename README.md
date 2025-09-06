@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# 🛒 Full Stack E-Commerce App (Web + Mobile)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern **E-Commerce Application** built with **Next.js (Web)** and **Expo React Native (Mobile)** with **Redux Toolkit** for state management.  
+This project provides a complete shopping experience with authentication, product listing, cart management, order tracking, and secure payments.  
 
-## Get started
+---
 
-1. Install dependencies
+## 🌐 Live Web App
 
-   ```bash
-   npm install
-   ```
+👉 [E-Commerce Web App](https://ecommercefrontend-orpin.vercel.app/)  
 
-2. Start the app
+Login credentials are available directly on the **Login Page** of the app.  
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 📱 Mobile App
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The mobile version is built using **Expo + React Native** and provides the same functionality as the web app, optimized for mobile users.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📹 Project Demo
 
-When you're ready, run:
+Here’s a quick walkthrough of the project:  
 
+https://github.com/your-username/your-repo-name/raw/main/demo.mp4  
+
+*(The video file `video.mp4` is located in the root of this repository.)*
+
+---
+
+## ✨ Features
+
+### 👤 Authentication
+- User login & signup  
+- Secure sessions with JWT  
+- Auto-persisted user state  
+
+### 🛍️ Products
+- Product listing with categories  
+- Product detail page with add-to-cart  
+- Popular products section  
+- Discount & original price display  
+
+### 🛒 Cart
+- Add to cart with quantity  
+- Cart state synced across app  
+- Clear cart after successful payment  
+
+### 📦 Orders
+- Order placement with payment integration  
+- View all past orders with status badges:
+  - `PENDING`
+  - `PROCESSING`
+  - `DELIVERED`
+  - `RETURNED`
+- Order items preview with product images  
+
+### 📑 Additional Pages
+- About Page  
+- FAQ Page  
+- Banner Section  
+- Footer Section  
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend (Web)
+- **Next.js 13+ (App Router)**  
+- **Tailwind CSS**  
+- **Redux Toolkit**  
+- **RTK Query** (for API calls)  
+
+### Mobile
+- **Expo + React Native**  
+- **React Navigation (expo-router)**  
+- **Redux Toolkit**  
+
+### Backend (assumed / API)
+- **Node.js / Express** or another REST API backend  
+- Integrated with payment gateway  
+
+---
+
+## ⚡ Installation & Setup
+
+### Clone the Repository
 ```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+git clone https://github.com/Monirul-Jim/e_comm_expo_app
+cd your-repo-name
